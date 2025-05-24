@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
     public float chaseRange = 5f;
     public float attackRange = 1f;
     public float attackCooldownTime = 1f;
@@ -30,6 +31,15 @@ public class EnemyController : MonoBehaviour
         _currentState = newState;
         _currentState.Enter(this);
     }
+
+    public void Burn()
+    {
+        Debug.Log("Monster is burning");
+        //TODO: add dying states
+
+        Destroy(gameObject, 1f);
+    }
+
 
     public Vector2 GetStartPosition() => _startPosition;
 

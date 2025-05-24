@@ -47,7 +47,7 @@ MonoBehaviour:
   m_ComponentVersion: 2
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.6
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 2
+  m_PointLightOuterRadius: 6
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -396,7 +396,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountOfMatches: 10
   _matches: {fileID: 6017177083043036576, guid: be23b1258e84a0540bd39a1d0dd2cd41, type: 3}
-  _throwForce: 50
+  _throwForce: 180
+  _HUD: {fileID: 0}
 --- !u!114 &8731317934178727234
 MonoBehaviour:
   m_ObjectHideFlags: 0
