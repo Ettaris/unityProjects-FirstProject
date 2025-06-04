@@ -23,6 +23,7 @@ public class ReturnState : IEnemyState
         {
             enemy.ChangeState(new ChaseState());
         }
+        enemy._animator.SetFloat("Speed", 1);
     }
 
     public void Exit(EnemyController enemy) { }

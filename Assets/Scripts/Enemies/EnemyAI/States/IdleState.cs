@@ -12,6 +12,8 @@ public class IdleState : IEnemyState
         {
             enemy.ChangeState(new ChaseState());
         }
+        enemy._animator.SetFloat("Speed", 0);
+
     }
 
     public void Exit(EnemyController enemy)

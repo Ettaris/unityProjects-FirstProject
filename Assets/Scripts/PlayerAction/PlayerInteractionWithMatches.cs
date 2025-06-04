@@ -39,9 +39,10 @@ public class PlayerInteractionWithMatches : MonoBehaviour
 
     private void ThrowMatch(Vector2 positionToThrow, float distance)
     {
-        GameObject match = Instantiate(_matches, transform.position, Quaternion.identity);
+        //TODO: spawn at hand position
+        GameObject match = Instantiate(_matches, transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
         //TODO: how to add force right
-        match.GetComponent<Rigidbody2D>().AddForce(positionToThrow.normalized * Mathf.Sqrt(distance)* _throwForce);
+        match.GetComponent<Rigidbody2D>().AddForce(positionToThrow.normalized * _throwForce);
         match.GetComponent<MatchesBehavior>().SetTargetPosition(positionToThrow + new Vector2(transform.position.x, transform.position.y));
     }
 

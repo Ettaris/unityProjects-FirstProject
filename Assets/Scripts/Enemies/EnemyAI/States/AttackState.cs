@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class AttackState : IEnemyState
 {
@@ -22,8 +23,9 @@ public class AttackState : IEnemyState
         }
         else if (Time.time - _lastAttackTime >= _attackCooldownTime)
         {
+            _lastAttackTime = Time.time;
             Debug.Log("Enemy attacks player");
-
+            enemy._animator.SetTrigger("Attack");
         }
 
     }
@@ -32,5 +34,17 @@ public class AttackState : IEnemyState
     {
     }
 
+    //public void EnemyAttack()
+    //{
+    //    LayerMask playerLayer = LayerMask.GetMask("Player");
+
+    //    Collider2D hitPlayer =
+    //    foreach (Collider2D enemy in hitEnemies)
+    //    {
+    //        enemy.GetComponent<EnemyController>()?.TakeDamage(damage);
+    //    }
+
+    //    Debug.Log("Sword damage applied.");
+    //}
 
 }

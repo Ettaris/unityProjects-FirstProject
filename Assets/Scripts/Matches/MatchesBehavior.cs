@@ -14,6 +14,7 @@ public class MatchesBehavior : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Light2D _light;
+    private BoxCollider2D _boxCollider;
     private bool _isAlreadyDying = false;
     private bool _isStopped = false;
     private Vector2 _targetPosition = Vector2.zero;
@@ -23,6 +24,7 @@ public class MatchesBehavior : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _boxCollider = GetComponent<BoxCollider2D>();
         _light = GetComponentInChildren<Light2D>();
         _fireTrail = GetComponentInChildren<ParticleSystem>();
     }
@@ -48,6 +50,7 @@ public class MatchesBehavior : MonoBehaviour
             {
                 _rb.linearVelocity = Vector2.zero;
                 _rb.bodyType = RigidbodyType2D.Kinematic; // Stops further physics movement
+                _boxCollider.isTrigger = true;
                 _isStopped = true;
             }
             else if (distance < _slowDownRadius)
@@ -58,18 +61,27 @@ public class MatchesBehavior : MonoBehaviour
                 Vector2 dir = (_targetPosition - (Vector2)transform.position).normalized;
                 if (_rb.linearVelocity.magnitude > 0.6f)
                     _rb.AddForce(-dir * adjustedSpeed * 1.3f);
-                if (distance < _slowDownRadius / 6)
+                if (distance < _slowDownRadius / 5)
                 {
                     _rb.linearVelocity = dir * adjustedSpeed;
+                    
                 }
             }
+
 
             // Rotate to match direction
             if (_rb.linearVelocity.magnitude > 0.1f)
             {
-                float angle = Mathf.Atan2(_rb.linearVelocity.y, _rb.linearVelocity.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                //float angle = Mathf.Atan2(_rb.linearVelocity.y, _rb.linearVelocity.x) * Mathf.Rad2Deg;
+                //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
+            else if (/*TODO:*/ _timeToBurn < 19f)
+            {
+                _boxCollider.isTrigger = true;
+                _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                _isStopped = true;
+            }
+
         }
 
 

@@ -14,8 +14,8 @@ TagManager:
   - UI
   - Background1
   - Player
-  - 
-  - 
+  - Walls
+  - Enemy
   - 
   - 
   - 
@@ -45,8 +45,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Ground
     uniqueID: 1323620619
+    locked: 0
+  - name: WalkInFront
+    uniqueID: 3809197751
+    locked: 0
+  - name: Collision
+    uniqueID: 969184201
+    locked: 0
+  - name: Interactable
+    uniqueID: 2474512565
+    locked: 0
+  - name: Player
+    uniqueID: 719883303
+    locked: 0
+  - name: WalkBehind
+    uniqueID: 4152593537
+    locked: 0
+  - name: Decor
+    uniqueID: 3187772841
     locked: 0
   m_RenderingLayers:
   - Default

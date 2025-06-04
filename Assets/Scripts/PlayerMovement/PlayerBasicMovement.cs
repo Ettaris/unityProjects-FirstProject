@@ -11,12 +11,14 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private Rigidbody2D _rb2d;
     private Vector2 _moveInput;
+    private Animator _animator;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,8 +42,7 @@ public class PlayerBasicMovement : MonoBehaviour
         //MOVEMENT BASED ON VELOCITY
 
         _rb2d.linearVelocity = _moveInput * _moveMaxSpeed;
-
-
+        _animator.SetFloat("Speed", _moveInput.magnitude);
     }
 
     public void MoveInput(InputAction.CallbackContext context)

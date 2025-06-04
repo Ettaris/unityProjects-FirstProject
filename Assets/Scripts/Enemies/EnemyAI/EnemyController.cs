@@ -1,8 +1,11 @@
+using System.Linq;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
+    public int health = 3;
 
     public float chaseRange = 5f;
     public float attackRange = 1f;
@@ -12,12 +15,21 @@ public class EnemyController : MonoBehaviour
 
     private Vector2 _startPosition;
     private IEnemyState _currentState;
+    private int _currentHealth;
+    public Animator _animator { get; private set; }
 
     private void Start()
     {
         _startPosition = transform.position;
         _currentState = new IdleState();
         _currentState.Enter(this);
+        _currentHealth = health;
+        if (playerTransform == null)
+        {
+            playerTransform = FindObjectsByType<PlayerBasicMovement>(FindObjectsSortMode.None).First().transform;
+            Debug.Log(playerTransform.tag);
+        }
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -40,6 +52,15 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
+    public void TakeDamage(int damagePoints)
+    {
+        _currentHealth -= damagePoints;
+        if (_currentHealth <= 0)
+        {
+            Debug.Log("Enemy is dying");
+            Destroy(gameObject);
+        }
+    }
 
     public Vector2 GetStartPosition() => _startPosition;
 
