@@ -7,9 +7,15 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact()
     {
-        Debug.Log($"{gameObject.name} was interacted with.");
-        // Override this in subclasses for custom behavior
+        if (CanInteract())
+        {
+            Debug.Log($"{gameObject.name} was interacted with.");
+            // Override this in subclasses for custom behavior
+        }
     }
 
-    
+    public virtual bool CanInteract()
+    {
+        return true;
+    }
 }

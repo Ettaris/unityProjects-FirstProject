@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CheckpointInteract : MonoBehaviour
 {
+    public GameObject mapPanel;
 
     private InputAction _interactAction;
 
@@ -19,6 +21,7 @@ public class CheckpointInteract : MonoBehaviour
             if (_interactAction.WasPressedThisFrame()) {
                 //TODO: realise it
                 Debug.Log("Open checkpoint UI(Map, bestiary and player stats)");
+                mapPanel.SetActive(!mapPanel.activeSelf);
             }
         }
     }

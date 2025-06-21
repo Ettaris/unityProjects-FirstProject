@@ -62,6 +62,23 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //called via animation events
+    public void EnemyAttacks()
+    {
+        foreach (DamadeByCollision damageByCollisionObject in gameObject.GetComponentsInChildren<DamadeByCollision>(true))
+        {
+            damageByCollisionObject.enabled = true;
+        }
+    }
+
+    public void DisableAttackCollision()
+    {
+        foreach (DamadeByCollision damageByCollisionObject in gameObject.GetComponentsInChildren<DamadeByCollision>(true))
+        {
+            damageByCollisionObject.enabled = false;
+        }
+    }
+
     public Vector2 GetStartPosition() => _startPosition;
 
     public float DistanceToPlayer() => Vector2.Distance(transform.position, playerTransform.position);

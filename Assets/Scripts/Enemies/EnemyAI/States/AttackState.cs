@@ -6,9 +6,11 @@ public class AttackState : IEnemyState
     private float _lastAttackTime;
     private float _attackCooldownTime;
     private float _distance;
+    private EnemyController _enemy;
 
     public void Enter(EnemyController enemy)
     {
+        _enemy = enemy;
         _attackCooldownTime = enemy.attackCooldownTime;
         _lastAttackTime = Time.time - _attackCooldownTime;
     }
@@ -32,19 +34,12 @@ public class AttackState : IEnemyState
 
     public void Exit(EnemyController enemy)
     {
+        foreach (DamadeByCollision damageByCollisionObject in _enemy?.gameObject.GetComponentsInChildren<DamadeByCollision>(true))
+        {
+            damageByCollisionObject.enabled = false;
+        }
     }
 
-    //public void EnemyAttack()
-    //{
-    //    LayerMask playerLayer = LayerMask.GetMask("Player");
 
-    //    Collider2D hitPlayer =
-    //    foreach (Collider2D enemy in hitEnemies)
-    //    {
-    //        enemy.GetComponent<EnemyController>()?.TakeDamage(damage);
-    //    }
-
-    //    Debug.Log("Sword damage applied.");
-    //}
 
 }
