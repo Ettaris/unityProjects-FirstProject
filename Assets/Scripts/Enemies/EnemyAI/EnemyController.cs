@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.Linq;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-
+    //TODO: add headers
     public int health = 3;
 
     public float chaseRange = 5f;
@@ -17,19 +18,23 @@ public class EnemyController : MonoBehaviour
     private IEnemyState _currentState;
     private int _currentHealth;
     public Animator _animator { get; private set; }
+    public MatchstickDetector _matchstickDetector { get; private set; }
 
     private void Start()
     {
-        _startPosition = transform.position;
-        _currentState = new IdleState();
-        _currentState.Enter(this);
-        _currentHealth = health;
         if (playerTransform == null)
         {
             playerTransform = FindObjectsByType<PlayerBasicMovement>(FindObjectsSortMode.None).First().transform;
             Debug.Log(playerTransform.tag);
         }
+        _startPosition = transform.position;
+        _currentHealth = health;
         _animator = GetComponent<Animator>();
+        _matchstickDetector = GetComponent<MatchstickDetector>();
+
+
+        _currentState = new IdleState();
+        _currentState.Enter(this);
     }
 
     private void Update()
@@ -49,7 +54,7 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Monster is burning");
         //TODO: add dying states
 
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 1.5f);
     }
 
     public void TakeDamage(int damagePoints)
@@ -79,8 +84,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+
     public Vector2 GetStartPosition() => _startPosition;
 
     public float DistanceToPlayer() => Vector2.Distance(transform.position, playerTransform.position);
+    
+    public bool IsMatchstickDetected() => _matchstickDetector.isMatchDetected;
+
+    public bool IsEnemyAggressive() => _matchstickDetector.isEnemyAggressive;
+    
+    public List<Vector2> MatchstickPosition() => _matchstickDetector.matchstickPosition;
 }
 

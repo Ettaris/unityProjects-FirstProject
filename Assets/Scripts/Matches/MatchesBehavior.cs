@@ -60,8 +60,8 @@ public class MatchesBehavior : MonoBehaviour
                 float adjustedSpeed = Mathf.Lerp(0.2f, _rb.linearVelocity.magnitude, t);
                 Vector2 dir = (_targetPosition - (Vector2)transform.position).normalized;
                 if (_rb.linearVelocity.magnitude > 0.6f)
-                    _rb.AddForce(-dir * adjustedSpeed * 1.3f);
-                if (distance < _slowDownRadius / 5)
+                    _rb.AddForce(1.3f * adjustedSpeed * -dir);
+                else if (distance < _slowDownRadius / 5)
                 {
                     _rb.linearVelocity = dir * adjustedSpeed;
                     
@@ -69,18 +69,6 @@ public class MatchesBehavior : MonoBehaviour
             }
 
 
-            // Rotate to match direction
-            if (_rb.linearVelocity.magnitude > 0.1f)
-            {
-                //float angle = Mathf.Atan2(_rb.linearVelocity.y, _rb.linearVelocity.x) * Mathf.Rad2Deg;
-                //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            }
-            else if (/*TODO:*/ _timeToBurn < 19f)
-            {
-                _boxCollider.isTrigger = true;
-                _rb.constraints = RigidbodyConstraints2D.FreezeAll;
-                _isStopped = true;
-            }
 
         }
 
@@ -103,12 +91,10 @@ public class MatchesBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster"))
+        if (collision.TryGetComponent(out OilPool oilpool))
         {
-            _isAlreadyDying = true;
-            StartCoroutine(SlowFade(0.05f, 0.08f));
-            EnemyController enemy = collision.GetComponent<EnemyController>();
-            enemy.Burn();
+            oilpool.Ignite();
+            Destroy(gameObject);
         }
     }
 

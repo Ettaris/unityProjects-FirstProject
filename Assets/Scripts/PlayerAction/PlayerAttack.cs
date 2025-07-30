@@ -54,10 +54,11 @@ public class PlayerAttack : MonoBehaviour
 
     public void InputAttack(InputAction.CallbackContext context)
     {
-        if (context.performed && _isReadyToAttack) {
-            _isReadyToAttack = false;
-            animator.SetTrigger("Attack");
-        }
+        //TODO: clean it
+        //if (context.performed && _isReadyToAttack) {
+        //    _isReadyToAttack = false;
+        //    animator.SetTrigger("Attack");
+        //}
 
     }
 }

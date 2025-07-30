@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public int health = 1;
+    public GameObject endPanel;
 
     private int _currentHealth;
 
@@ -19,7 +20,9 @@ public class PlayerManager : MonoBehaviour
         if (_currentHealth <= 0)
         {
             Debug.Log("Player is dying");
-            Destroy(gameObject);
+            endPanel.SetActive(true);
+            gameObject.SetActive(false);
+            Time.timeScale = 0f;
         }
     }
 }

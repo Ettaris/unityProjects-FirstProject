@@ -11,7 +11,10 @@ public class ChaseState : IEnemyState
     public void Update(EnemyController enemy)
     {
          _distance = enemy.DistanceToPlayer();
-
+        if (enemy.IsMatchstickDetected())
+        {
+            enemy.ChangeState(new AvoidingState());
+        }
         if (_distance <= enemy.attackRange)
         {
             enemy.ChangeState(new AttackState());

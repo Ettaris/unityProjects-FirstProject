@@ -9,6 +9,7 @@ public class NPCDialogueSystem : Interactable
     public NPCDialogueData dialogueData;
     public TMP_Text dialogueText;
     public GameObject dialogueTextPlace;
+    public AudioSource audioSource;
 
     private int _dialogueIndex;
     private bool _isTyping, _isDialogueActive;
@@ -47,9 +48,12 @@ public class NPCDialogueSystem : Interactable
     {
         _isTyping = true;
         dialogueText.SetText("");
+        audioSource.clip = dialogueData.voiceSound;
+        audioSource.pitch = dialogueData.voicePitch;
         foreach (char letter in dialogueData.dialogueLines[_dialogueIndex])
         {
             dialogueText.text += letter;
+            audioSource.Play();
             yield return new WaitForSeconds(dialogueData.typingSpeed);
         }
 
