@@ -47,11 +47,9 @@ public class MatchstickDetector : MonoBehaviour
 
     public void SetEnemyAggressive()
     {
-        if (!isEnemyAggressive)
-        {
-            isEnemyAggressive = true;
-            StartCoroutine(ResetIsEnemyAggressive());
-        }
+        StopCoroutine(ResetIsEnemyAggressive());
+        isEnemyAggressive = true;
+        StartCoroutine(ResetIsEnemyAggressive());
     }
 
     IEnumerator ResetIsEnemyAggressive()

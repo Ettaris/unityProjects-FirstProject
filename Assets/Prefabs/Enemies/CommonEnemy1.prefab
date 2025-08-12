@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPrompt: Press E to interact
   dialogueData: {fileID: 11400000, guid: bbc6d7072f4434e4194f48ee4330f376, type: 2}
+  stage: 0
   dialogueText: {fileID: 2236044768186626068}
   dialogueTextPlace: {fileID: 7788692572826979703}
   audioSource: {fileID: 3135421201085418946}
@@ -781,14 +782,14 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: d5ca519fa333c474aad21217a9defe4b, type: 3}
-      insertIndex: 13
-      addedObject: {fileID: 7491242036703532528}
-    - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: d5ca519fa333c474aad21217a9defe4b, type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 2729841431208877215}
     - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: d5ca519fa333c474aad21217a9defe4b, type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 3636038766388491335}
+    - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: d5ca519fa333c474aad21217a9defe4b, type: 3}
+      insertIndex: 16
+      addedObject: {fileID: 7491242036703532528}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: d5ca519fa333c474aad21217a9defe4b, type: 3}
       insertIndex: -1
