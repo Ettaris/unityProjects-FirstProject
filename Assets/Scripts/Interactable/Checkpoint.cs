@@ -1,16 +1,47 @@
 using UnityEngine;
 
+
 public class Checkpoint : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Checkpoint Settings")]
+    public int checkpointID = 0;
+    public bool isActive = false;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (isActive) return;
+
+        if (collision.CompareTag("Player"))
+        {
+            ActivateCheckpoint();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void ActivateCheckpoint()
     {
-        
+        isActive = true;
+        Debug.Log("Checkpoint activated: " + checkpointID);
+
+        // Simulate saving game state
+        //TODO: Make save/load system
+        SaveGameState();
+
+        // Optional: Visual feedback
+        // e.g., change sprite, play animation or sound
     }
+
+    void SaveGameState()
+    {
+        // Save position to PlayerPrefs (or use your own system)
+        //TODO: Remake it
+        PlayerPrefs.SetFloat("CheckpointX", transform.position.x);
+        PlayerPrefs.SetFloat("CheckpointY", transform.position.y);
+        PlayerPrefs.SetInt("LastCheckpoint", checkpointID);
+        PlayerPrefs.Save();
+
+        Debug.Log("Game saved at checkpoint: " + checkpointID);
+    }
+
+    public int GetCheckpointID() => checkpointID;
 }
+

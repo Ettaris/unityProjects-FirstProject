@@ -1,4 +1,5 @@
 
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,9 +11,11 @@ public class PlayerInteractionWithMatches : MonoBehaviour
     [SerializeField] private GameObject _matches;
     [SerializeField] private float _throwForce = 1;
     [SerializeField] private HUD _HUD;
+    [SerializeField] private Transform _rightHand;
 
     private InputAction _throwMatchAction;
     private Vector2 _positionToThrow;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,8 +23,10 @@ public class PlayerInteractionWithMatches : MonoBehaviour
         if (_HUD == null)
         {
             _HUD = FindFirstObjectByType<Canvas>().GetComponent<HUD>();
-            _HUD.SetMacthesCountText(_amountOfMatches);
+
         }
+        _HUD.SetMacthesCountText(_amountOfMatches);
+
     }
 
     // Update is called once per frame
@@ -32,17 +37,21 @@ public class PlayerInteractionWithMatches : MonoBehaviour
             _amountOfMatches--;
             _HUD.SetMacthesCountText(_amountOfMatches);
             _positionToThrow = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _positionToThrow = _positionToThrow - new Vector2(transform.position.x, transform.position.y);
-            ThrowMatch(_positionToThrow, Vector2.Distance(_positionToThrow, transform.position));
+            Debug.Log(_positionToThrow);
+            Vector2 direction = _positionToThrow - new Vector2(transform.position.x, transform.position.y);
+            Debug.Log(transform.position.x);
+            Debug.Log(_positionToThrow);
+            ThrowMatch(_positionToThrow,direction);
         }
     }
 
-    private void ThrowMatch(Vector2 positionToThrow, float distance)
+    private void ThrowMatch(Vector2 positionToThrow, Vector2 direction)
     {
+        //TODO: spawn at hand position
         GameObject match = Instantiate(_matches, transform.position, Quaternion.identity);
         //TODO: how to add force right
-        match.GetComponent<Rigidbody2D>().AddForce(positionToThrow.normalized * Mathf.Sqrt(distance)* _throwForce);
-        match.GetComponent<MatchesBehavior>().SetTargetPosition(positionToThrow + new Vector2(transform.position.x, transform.position.y));
+        match.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _throwForce);
+        match.GetComponent<MatchesBehavior>().SetTargetPosition(positionToThrow);
     }
 
     public void PickUpMatches(int theNumberOfMatchesToPickUp)
