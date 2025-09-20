@@ -7,6 +7,8 @@ TagManager:
   - InteractableCollider
   - InteractableColliderPlayer
   - Enemy
+  - LightZone
+  - Matches
   layers:
   - Default
   - TransparentFX

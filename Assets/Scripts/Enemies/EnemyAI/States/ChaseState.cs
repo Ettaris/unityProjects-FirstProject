@@ -11,7 +11,7 @@ public class ChaseState : IEnemyState
     public void Update(EnemyController enemy)
     {
          _distance = enemy.DistanceToPlayer();
-        if (enemy.IsMatchstickDetected())
+        if (enemy.IsMatchstickDetected() || enemy.IsInStaticLightZone())
         {
             enemy.ChangeState(new AvoidingState());
         }
@@ -26,6 +26,7 @@ public class ChaseState : IEnemyState
         else
         {
             Vector2 direction = (enemy.playerTransform.position - enemy.transform.position).normalized;
+            enemy.SetCurrentMoveDirection(direction);
             enemy.transform.position += (Vector3)(direction * enemy.speed * Time.deltaTime);
             enemy._animator.SetFloat("Speed", 1);
         }

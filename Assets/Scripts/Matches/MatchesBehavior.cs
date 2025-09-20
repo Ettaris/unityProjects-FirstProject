@@ -8,7 +8,6 @@ public class MatchesBehavior : MonoBehaviour
 {
     [Header("Burn Settings")]
     [SerializeField] private float _timeToBurn = 20f;
-
     [SerializeField] private float _distanceToStop = .1f;
     [SerializeField] private float _slowDownRadius = .4f;
 
@@ -59,13 +58,6 @@ public class MatchesBehavior : MonoBehaviour
                 float t = distance / _slowDownRadius; // 0..1
                 float adjustedSpeed = Mathf.Lerp(0.2f, _rb.linearVelocity.magnitude, t);
                 Vector2 dir = (_targetPosition - (Vector2)transform.position).normalized;
-                if (_rb.linearVelocity.magnitude > 0.6f)
-                    _rb.AddForce(1.3f * adjustedSpeed * -dir);
-                else if (distance < _slowDownRadius / 5)
-                {
-                    _rb.linearVelocity = dir * adjustedSpeed;
-                    
-                }
             }
 
 
@@ -94,7 +86,7 @@ public class MatchesBehavior : MonoBehaviour
         if (collision.TryGetComponent(out OilPool oilpool))
         {
             oilpool.Ignite();
-            Destroy(gameObject);
+            StartCoroutine(SlowFade());
         }
     }
 

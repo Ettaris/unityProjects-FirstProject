@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,14 +14,16 @@ public class WorldDialogueUI : MonoBehaviour
     private int currentResponseIndex = 0;
     private List<DialogueResponse> currentResponses;
     private System.Action<DialogueNode> onResponseSelected;
+    private bool _isTextWasWritten;
 
     public Color defaultColor = Color.white;
     public Color selectedColor = Color.yellow;
 
-    public void ShowLine(string text)
+    public void ShowLineAndResponses(string text, List<DialogueResponse> responses, System.Action<DialogueNode> onResponseSelected)
     {
         dialogueText.text = "";
         typewriter.Display(text);
+        StartCoroutine(ResponseTextDelay(typewriter.GetTimeForTypingText(text), responses, onResponseSelected));
     }
 
     public void ShowResponses(List<DialogueResponse> responses, System.Action<DialogueNode> onResponseSelected)
@@ -28,20 +31,22 @@ public class WorldDialogueUI : MonoBehaviour
         this.currentResponses = responses;
         this.onResponseSelected = onResponseSelected;
 
-        for (int i = 0; i < responseTexts.Count; i++)
+        if (responses != null)
         {
-            if (i < responses.Count)
+            for (int i = 0; i < responseTexts.Count; i++)
             {
-                responseTexts[i].text = (i + 1) + ". " + responses[i].responseText;
-                responseTexts[i].color = defaultColor;
-                responseTexts[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                responseTexts[i].gameObject.SetActive(false);
+                if (i < responses.Count)
+                {
+                    responseTexts[i].text = (i + 1) + ". " + responses[i].responseText;
+                    responseTexts[i].color = defaultColor;
+                    responseTexts[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    responseTexts[i].gameObject.SetActive(false);
+                }
             }
         }
-
         currentResponseIndex = -1;
     }
 
@@ -77,5 +82,20 @@ public class WorldDialogueUI : MonoBehaviour
             foreach (var text in responseTexts)
                 text.gameObject.SetActive(false);
         }
+    }
+
+    IEnumerator ResponseTextDelay(float delay, List<DialogueResponse> responses, System.Action<DialogueNode> onResponseSelected)
+    {
+        yield return new WaitForSeconds(delay + 0.5f);
+        ShowResponses(responses, onResponseSelected);
+        yield return new WaitForSeconds(3f);
+        if (responses.Count == 0)
+            EndDialogue();
+    }
+
+    public void EndDialogue()
+    {
+        dialogueText.text = "";
+        //TODO:
     }
 }

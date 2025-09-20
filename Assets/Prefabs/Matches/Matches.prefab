@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3101868150034062037}
   m_Layer: 10
   m_Name: Matches
-  m_TagString: Untagged
+  m_TagString: Matches
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,7 +203,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &3618867124582218376
 BoxCollider2D:
@@ -263,9 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ff15583114650498d9c501afd4340a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToBurn: 20
-  _distanceToStop: 0.1
-  _slowDownRadius: 1
+  _timeToBurn: 8
+  _distanceToStop: 0.15
+  _slowDownRadius: 2
 --- !u!58 &3101868150034062037
 CircleCollider2D:
   m_ObjectHideFlags: 0

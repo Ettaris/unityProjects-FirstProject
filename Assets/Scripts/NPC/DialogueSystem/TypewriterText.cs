@@ -32,4 +32,6 @@ public class TypewriterText : MonoBehaviour
             yield return new WaitForSeconds(characterDelay);
         }
     }
+
+    public float GetTimeForTypingText(string message) => message.Length * characterDelay;
 }

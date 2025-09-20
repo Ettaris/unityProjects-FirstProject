@@ -1,13 +1,17 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
     public WorldDialogueUI ui;
     private DialogueNode currentNode;
+    private DialogueNode nextNode;
 
-    public void StartDialogue(NPCDialogueData data)
+    public void StartDialogue(NPCDialogueData data, List<TextMeshProUGUI> responseTexts)
     {
         currentNode = data.startingNode;
+        ui.responseTexts = responseTexts;
         ShowCurrentNode();
         Debug.Log("Dialogue is started");
     }
@@ -22,18 +26,20 @@ public class DialogueManager : MonoBehaviour
         if (currentNode == null) return;
 
         var line = currentNode.GetRandomLine();
-        if (line != null)
-            Debug.Log(line.text);
-            ui.ShowLine(line.text);
-
         var responses = currentNode.GetValidResponses();
-        if (responses.Count > 0)
-            ui.ShowResponses(responses, OnResponseSelected);
+        if (line != null)
+            ui.ShowLineAndResponses(line.text, responses, OnResponseSelected);
+
     }
 
     void OnResponseSelected(DialogueNode nextNode)
     {
         currentNode = nextNode;
         ShowCurrentNode();
+    }
+
+    public void EndDialogue()
+    {
+        ui.EndDialogue();
     }
 }

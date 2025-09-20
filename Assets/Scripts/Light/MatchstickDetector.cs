@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class MatchstickDetector : MonoBehaviour
 {
-    public float detectionRadius = 3f;
+    public float detectionRadius = 4f;
+    public Vector3 detectionRadiusOffset = Vector3.zero;
+
     public LayerMask matchstickMask;
     public bool isMatchDetected { get; private set; } = false;
     public bool isEnemyAggressive { get; private set; } = false;
@@ -21,12 +23,12 @@ public class MatchstickDetector : MonoBehaviour
 
     IEnumerator MatchstickDetection()
     {
-        _matchsticks = Physics2D.OverlapCircleAll(transform.position + new Vector3(0, 1, 0), detectionRadius, matchstickMask);
+        _matchsticks = Physics2D.OverlapCircleAll(transform.position + detectionRadiusOffset, detectionRadius, matchstickMask);
         if (_matchsticks.Length > 0)
         {
             isMatchDetected = true;
             SetEnemyAggressive();
-            foreach (Collider2D matchstick in Physics2D.OverlapCircleAll(transform.position + new Vector3(0, 1, 0), detectionRadius, matchstickMask))
+            foreach (Collider2D matchstick in Physics2D.OverlapCircleAll(transform.position + detectionRadiusOffset, detectionRadius, matchstickMask))
             {
                 matchstickPosition.Add(matchstick.transform.position);
             }
@@ -35,26 +37,26 @@ public class MatchstickDetector : MonoBehaviour
         {
             isMatchDetected = false;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         StartCoroutine(MatchstickDetection());
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position + new Vector3(0, 1, 0), detectionRadius);
+        Gizmos.DrawSphere(transform.position + detectionRadiusOffset, detectionRadius);
     }
 
     public void SetEnemyAggressive()
     {
         StopCoroutine(ResetIsEnemyAggressive());
         isEnemyAggressive = true;
-        StartCoroutine(ResetIsEnemyAggressive());
+        //TODO: is it need?   StartCoroutine(ResetIsEnemyAggressive());
     }
 
     IEnumerator ResetIsEnemyAggressive()
     {
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(60);
         isEnemyAggressive = false;
     }
 }
